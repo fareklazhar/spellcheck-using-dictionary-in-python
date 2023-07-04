@@ -41,14 +41,11 @@ class SpellCheck:
         for i in range(len(string_words)):
             
             # loop over words in the dictionary
-            for name in self.dictionary:
-                
-                # if the fuzzywuzzy returns the matched value greater than 80
-                if fuzz.ratio(string_words[i].lower(), name.lower()) >= 75:
-                    
-                    # append the dict word to the suggestion list
-                    suggestions.append(name)
-
+            suggestions.extend(
+                name
+                for name in self.dictionary
+                if fuzz.ratio(string_words[i].lower(), name.lower()) >= 75
+            )
         # return the suggestions list
         return suggestions
 
